@@ -1,5 +1,20 @@
 # Arduino Hardware Support Package for LGT8F's 
 
+### Spence's Comments
+This is cool and all, but the way they implement it is godawful. 
+
+Correct solution is:
+* Create combined header files, like a real AVR; wrap up a new compiler package to incorporate them 
+	* I already have my own compiler package that I'm going to need to use anyway if Arduino official doesn't merge my PR
+	* Could roll this into that one pretty easily 
+	* copy the '328p stuff, rename the device spec so it gives it's own device define and hence pulls in it's header file in io.h. Easy-peasy. 
+* Get some decent pinout diagrams, particularly for the packages with different numbers of pins
+* Is there a wrapper around the high current I/O? If not, there should be (maybe an argument to pinMode()?)! This is a feature that people would *LOVE* because it saves them an output transistor!
+* Then, the Big Kahuna - a new linker script which puts constant variables into .rodata and memory-maps them like on the tinyAVR 0-series, 1-series, and megaAVR 0-series.
+* Finally, convince the people who originally made this core to host this modified compiler package so I don't have to.
+
+Unfortunately all this stuff is a fairly low priority for me.
+
 ### Task status
 
 - [x] PWM & Timers update
